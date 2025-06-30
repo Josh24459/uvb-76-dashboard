@@ -5,7 +5,7 @@
   <title>J.M UVB-76 Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Funpkg.com%2Fleaflet%2Fdist%2Fleaflet.css&data=05%7C02%7C%7C999aeeb9b1aa4a96d42f08ddb7b976a8%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868729367352353%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=TOEXaq4qml7VW9MYK6%2BUgYC4shRWjrLGvpdwaBcofns%3D&reserved=0" />
+  <link rel="stylesheet" href="https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Funpkg.com%2Fleaflet%2Fdist%2Fleaflet.css&data=05%7C02%7C%7C7590e6993e524a4cfd7608ddb7ba37bd%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868732619269655%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=Wsd2eO%2FfqBSIvUXdFwyNBeFgK%2Fx68k8sfk18jD1gqSk%3D&reserved=0" />
   <style>
     body {
       margin: 0;
@@ -16,29 +16,24 @@
       flex-direction: column;
       height: 100vh;
     }
-
     header {
       display: flex;
       align-items: center;
       background: #111;
       padding: 10px 20px;
     }
-
     header svg {
       height: 50px;
       margin-right: 20px;
     }
-
     h1 {
       font-weight: normal;
       color: #c97e7e;
     }
-
     nav {
       display: flex;
       background: #222;
     }
-
     nav button {
       flex: 1;
       background: #222;
@@ -47,38 +42,31 @@
       padding: 12px;
       cursor: pointer;
     }
-
     nav button.active {
       background: #333;
       color: #c97e7e;
     }
-
     main {
       flex: 1;
       display: flex;
       flex-direction: column;
     }
-
     .tabcontent {
       flex: 1;
       display: none;
       flex-direction: column;
     }
-
     .tabcontent.active {
       display: flex;
     }
-
     iframe, #map {
       flex: 1;
       border: none;
     }
-
     .controls {
       background: #111;
       padding: 10px;
     }
-
     .controls button {
       background: #c97e7e;
       color: #000;
@@ -87,7 +75,6 @@
       margin-right: 5px;
       cursor: pointer;
     }
-
     #logBox {
       flex: 1;
       background: #111;
@@ -95,17 +82,14 @@
       overflow-y: auto;
       font-family: monospace;
     }
-
     ul {
       list-style: none;
       padding: 0;
     }
-
     a {
       color: #c97e7e;
       text-decoration: none;
     }
-
     a:hover {
       text-decoration: underline;
     }
@@ -115,34 +99,36 @@
 
   <!-- Inline Rose Gold J.M Logo -->
   <header>
-    <svg viewBox="0 0 200 50" xmlns="https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&data=05%7C02%7C%7C999aeeb9b1aa4a96d42f08ddb7b976a8%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868729367393313%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=%2FinX7l9nLpY8EKAMPhk4vmd9wOEKFEJHBrAVrHLjSB8%3D&reserved=0">
+    <svg viewBox="0 0 200 50" xmlns="https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&data=05%7C02%7C%7C7590e6993e524a4cfd7608ddb7ba37bd%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868732619312795%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=LWQYO20bd9WPVk19FofyQtQZlBGDBHOiZ5AEi6JOGLU%3D&reserved=0">
       <text x="0" y="40" font-size="40" fill="#c97e7e" font-family="monospace">J.M</text>
     </svg>
     <h1>UVB-76 Dashboard</h1>
   </header>
 
   <nav>
-    <button class="tab active" onclick="openTab(event, 'sdr')">📡 SDR</button>
-    <button class="tab" onclick="openTab(event, 'map')">🗺️ Map</button>
-    <button class="tab" onclick="openTab(event, 'anomaly')">📈 Anomaly</button>
-    <button class="tab" onclick="openTab(event, 'log')">📚 Log</button>
-    <button class="tab" onclick="openTab(event, 'tools')">⚙️ Tools</button>
+    <button class="tab active" data-tab="sdr">📡 SDR</button>
+    <button class="tab" data-tab="map">🗺️ Map</button>
+    <button class="tab" data-tab="anomaly">📈 Anomaly</button>
+    <button class="tab" data-tab="log">📚 Log</button>
+    <button class="tab" data-tab="tools">⚙️ Tools</button>
   </nav>
 
   <main>
     <!-- SDR Tab -->
     <section id="sdr" class="tabcontent active">
-      <iframe id="sdrFrame" src="https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwebsdr.ewi.utwente.nl%3A8901%2F%3Ftune%3D4625am&data=05%7C02%7C%7C999aeeb9b1aa4a96d42f08ddb7b976a8%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868729367417950%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=m4fKpMSjRGa0PmrpGj8hTK%2B6z6iArXf7iAmJJ%2BU%2BJNM%3D&reserved=0"></iframe>
+      <iframe id="sdrFrame" src="https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwebsdr.ewi.utwente.nl%3A8901%2F%3Ftune%3D4625am&data=05%7C02%7C%7C7590e6993e524a4cfd7608ddb7ba37bd%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868732619346479%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=N4T5dfnSmes7IwtoQUd1roLCQF79k9x5COJpI9WVpD0%3D&reserved=0"></iframe>
       <div class="controls">
-        <button onclick="switchSDR('https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwebsdr.ewi.utwente.nl%3A8901%2F%3Ftune%3D4625am&data=05%7C02%7C%7C999aeeb9b1aa4a96d42f08ddb7b976a8%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868729367437755%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=mkOEGBhbkSDslc8jvf5jzgiRdUzaXXX6f4SFNaf7ePA%3D&reserved=0')">WebSDR (NL)</button>
+        <button onclick="switchSDR('https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwebsdr.ewi.utwente.nl%3A8901%2F%3Ftune%3D4625am&data=05%7C02%7C%7C7590e6993e524a4cfd7608ddb7ba37bd%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868732619369028%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=%2BZS7QO9C0YPmM3rB4DixpCcSxf0PDNP3FW1KOQGJ18U%3D&reserved=0')">WebSDR (NL)</button>
         <button onclick="switchSDR('http://kiwisdr:8073/')">KiwiSDR</button>
-        <button onclick="switchSDR('https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fmsk.swl.su%3A8073%2F&data=05%7C02%7C%7C999aeeb9b1aa4a96d42f08ddb7b976a8%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868729367453847%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=zKOYLu2kBxSuIAy%2BUTnyhJcVkq4GBuBxhNFHnZZ6qxw%3D&reserved=0')">Moscow SDR</button>
+        <button onclick="switchSDR('https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fmsk.swl.su%3A8073%2F&data=05%7C02%7C%7C7590e6993e524a4cfd7608ddb7ba37bd%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868732619388823%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=7h5mCx4Ti781%2BvKKZkaqrLgTL7vJpnAc7FVi9Uc9bl4%3D&reserved=0')">Moscow SDR</button>
       </div>
     </section>
 
     <!-- Map Tab -->
     <section id="map" class="tabcontent">
-      <div id="map" style="flex: 1;"></div>
+      <div id="mapContainer" style="flex: 1;">
+        <div id="map" style="width: 100%; height: 100%;"></div>
+      </div>
     </section>
 
     <!-- Anomaly Tab -->
@@ -167,32 +153,44 @@
     <section id="tools" class="tabcontent">
       <h2>Tools & Resources</h2>
       <ul>
-        <li><a href="https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.sigidwiki.com%2Fwiki%2FUVB-76&data=05%7C02%7C%7C999aeeb9b1aa4a96d42f08ddb7b976a8%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868729367473701%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=KGW%2BY3SNseWITCgWWz87Y3168lLgTmSuCOM70bgvdp0%3D&reserved=0" target="_blank">Signal ID Wiki</a></li>
-        <li><a href="https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.websdr.org%2F&data=05%7C02%7C%7C999aeeb9b1aa4a96d42f08ddb7b976a8%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868729367493970%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=sGTxihMcLd0sT%2BdbQpPCJcLPjRs5MVda8tdK%2Bu%2BKs%2FI%3D&reserved=0" target="_blank">More SDRs</a></li>
-        <li><a href="https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.kiwisdr.com%2Fpublic%2F&data=05%7C02%7C%7C999aeeb9b1aa4a96d42f08ddb7b976a8%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868729367509959%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=9jxRhg8CF2i9OgghtpwzBPpoLfPq9biDKvN662Go2t0%3D&reserved=0" target="_blank">Public KiwiSDR Directory</a></li>
+        <li><a href="https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.sigidwiki.com%2Fwiki%2FUVB-76&data=05%7C02%7C%7C7590e6993e524a4cfd7608ddb7ba37bd%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868732619409577%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=cAdTgP5aAvvwAyv0cBCLljTBB3tgoXH27e2xSfzH4PI%3D&reserved=0" target="_blank">Signal ID Wiki</a></li>
+        <li><a href="https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.websdr.org%2F&data=05%7C02%7C%7C7590e6993e524a4cfd7608ddb7ba37bd%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868732619430646%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=EGvg4scs4jTIkMxT3tRrKUEnmrE5C7m74HQK8r%2BV9u0%3D&reserved=0" target="_blank">More SDRs</a></li>
+        <li><a href="https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.kiwisdr.com%2Fpublic%2F&data=05%7C02%7C%7C7590e6993e524a4cfd7608ddb7ba37bd%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868732619452456%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=fI1ZHoeRPOJ8tA94hBI1o5RcTlk8TakeCd6i1aPSiSA%3D&reserved=0" target="_blank">Public KiwiSDR Directory</a></li>
       </ul>
     </section>
   </main>
 
   <!-- Leaflet JS -->
-  <script src="https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Funpkg.com%2Fleaflet%2Fdist%2Fleaflet.js&data=05%7C02%7C%7C999aeeb9b1aa4a96d42f08ddb7b976a8%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868729367526671%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=utN8YZcnHMeyMt9L0rMjwgpPtw1%2BME6f6aHutgZ3GLU%3D&reserved=0"></script>
+  <script src="https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Funpkg.com%2Fleaflet%2Fdist%2Fleaflet.js&data=05%7C02%7C%7C7590e6993e524a4cfd7608ddb7ba37bd%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868732619474122%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=dyE9LrZwW6XJLPUZmup5b%2BrlhU59rcx8kndGdX9WiQw%3D&reserved=0"></script>
   <script>
     // Tabs
-    function openTab(event, tab) {
-      document.querySelectorAll('.tabcontent').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
-      document.getElementById(tab).classList.add('active');
-      event.target.classList.add('active');
-    }
+    const tabs = document.querySelectorAll(".tab");
+    const tabContents = document.querySelectorAll(".tabcontent");
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        tabs.forEach(btn => btn.classList.remove("active"));
+        tabContents.forEach(content => content.classList.remove("active"));
+
+        tab.classList.add("active");
+        document.getElementById(tab.dataset.tab).classList.add("active");
+
+        if (tab.dataset.tab === "map") {
+          setTimeout(() => {
+            map.invalidateSize();
+          }, 100); // Fix for Leaflet map size
+        }
+      });
+    });
 
     // SDR switcher
     function switchSDR(url) {
       document.getElementById('sdrFrame').src = url;
     }
 
-    // Map
+    // Map init
     const map = L.map('map').setView([56.087, 37.545], 8);
-    L.tileLayer('https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Ftile.openstreetmap.org%2F&data=05%7C02%7C%7C999aeeb9b1aa4a96d42f08ddb7b976a8%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868729367542997%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=UF3YnP39asnfe%2Fe2Coz4rBM21gyWXs%2F8%2BqeWpt1uBo8%3D&reserved=0{z}/{x}/{y}.png', {
+    L.tileLayer('https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Ftile.openstreetmap.org%2F&data=05%7C02%7C%7C7590e6993e524a4cfd7608ddb7ba37bd%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868732619495612%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=IFcGrK5in1hQRhAAgo9QoEmCYSPgleiUltmpGfEoWpQ%3D&reserved=0{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap'
     }).addTo(map);
     L.marker([56.087, 37.545]).addTo(map).bindPopup('Approx. UVB-76').openPopup();
