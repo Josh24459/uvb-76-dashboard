@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>UVB-76 Monitoring Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #f0f0f0;
+      text-align: center;
+      padding: 30px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    a {
+      color: #00bfff;
+      text-decoration: none;
+      font-size: 1.1em;
+    }
+    .status {
+      font-weight: bold;
+      color: #0f0;
+      margin-bottom: 10px;
+    }
+    .box {
+      border: 2px solid #444;
+      padding: 20px;
+      display: inline-block;
+      border-radius: 10px;
+      background-color: #1e1e1e;
+      max-width: 800px;
+    }
+    iframe {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 720px;
+      height: 405px;
+      border: none;
+      border-radius: 8px;
+    }
+    .timestamp {
+      margin: 15px 0;
+    }
+    button {
+      background: #00bfff;
+      border: none;
+      color: #000;
+      padding: 8px 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 15px;
+    }
+    button:hover {
+      background: #0099cc;
+    }
+    body.light {
+      background-color: #f0f0f0;
+      color: #121212;
+    }
+    body.light .box {
+      background-color: #ffffff;
+      border-color: #ccc;
+    }
+    body.light .status {
+      color: #080;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>🔴 UVB-76 Monitoring Dashboard</h1>
+    <p class="status">Status: Active</p>
+    <p><a href="https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.youtube.com%2Fresults%3Fsearch_query%3Duvb-76%2Blive&data=05%7C02%7C%7C813b1d0a0f63481f591a08ddb7b07703%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868690760285530%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=3VoT8z0Ql5aQTOeduMGBQA0dR9Pg8VvPhhmxLZ43uxs%3D&reserved=0" target="_blank">Open in YouTube</a></p>
+    <p class="timestamp">Last Checked: <span id="timestamp"></span></p>
+    <p>Notes: UVB-76 is a mysterious Russian shortwave radio station transmitting on 4625 kHz.</p>
+    <iframe src="https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.youtube.com%2Fembed%2Flive_stream%3Fchannel%3DUCfRXK8aUgud9X7pZKkXhSxA&data=05%7C02%7C%7C813b1d0a0f63481f591a08ddb7b07703%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868690760350649%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=PORToNQAWmBTBqFQvnBtt%2F8xe4sa%2BRnkzahpDyhzlb4%3D&reserved=0" allowfullscreen></iframe>
+    <br/>
+    <button onclick="toggleTheme()">Toggle Dark/Light Mode</button>
+  </div>
+
+  <script>
+    function updateTimestamp() {
+      const now = new Date();
+      document.getElementById('timestamp').innerText = now.toLocaleString();
+    }
+    function toggleTheme() {
+      document.body.classList.toggle('light');
+    }
+    updateTimestamp();
+    setInterval(updateTimestamp, 60000);
+  </script>
+</body>
+</html>
