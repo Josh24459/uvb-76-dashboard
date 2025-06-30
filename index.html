@@ -189,3 +189,146 @@
   </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>UVB-76 Live Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Funpkg.com%2Fleaflet%2Fdist%2Fleaflet.css&data=05%7C02%7C%7Cd19c3e73a1394555124f08ddb7b4b57b%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868708953322121%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=VnGDjaO%2FACtsSAtzml720eJajO1DjUGUNXLDx2mect0%3D&reserved=0" />
+
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #eee;
+    }
+
+    #map {
+      flex: 2;
+      height: 100%;
+    }
+
+    #main {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    #sdr {
+      flex: 2;
+      border: none;
+      width: 100%;
+    }
+
+    #dashboard {
+      flex: 1;
+      background: #222;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #0f0;
+    }
+
+    a {
+      color: #0ff;
+    }
+
+    button {
+      background: #0f0;
+      color: #000;
+      border: none;
+      padding: 10px 15px;
+      margin: 5px 0;
+      cursor: pointer;
+    }
+
+    #log {
+      background: #000;
+      color: #0f0;
+      padding: 10px;
+      margin-top: 10px;
+      height: 100px;
+      overflow-y: scroll;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <!-- Map -->
+  <div id="map"></div>
+
+  <!-- SDR & Dashboard -->
+  <div id="main">
+    <!-- WebSDR iframe -->
+    <iframe
+      id="sdr"
+      src="https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwebsdr.ewi.utwente.nl%3A8901%2F%3Ftune%3D4625am&data=05%7C02%7C%7Cd19c3e73a1394555124f08ddb7b4b57b%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868708953355171%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=0dTT4CuoXri25QhlKHcit0YLZKlO3de%2BvUDYitPCSpY%3D&reserved=0"
+    ></iframe>
+
+    <!-- Dashboard -->
+    <div id="dashboard">
+      <h2>UVB-76 Dashboard</h2>
+      <p><strong>Status:</strong> <span id="status">Active</span></p>
+      <button onclick="toggleStatus()">Toggle Status</button>
+      <p><strong>Frequency:</strong> 4625 kHz AM</p>
+      <p><strong>Location:</strong> Povarovo, Russia (~56.087°N, 37.545°E)</p>
+      <p><strong>Live Stream:</strong> <a href="https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwebsdr.ewi.utwente.nl%3A8901%2F%3Ftune%3D4625am&data=05%7C02%7C%7Cd19c3e73a1394555124f08ddb7b4b57b%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868708953375363%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=apBJfK%2FV0%2F1GWmxL8rMFyRCVcEbynELPluOVgi8A1AQ%3D&reserved=0" target="_blank">Open in New Window</a></p>
+
+      <h3>Event Log</h3>
+      <div id="log"></div>
+      <button onclick="addLog()">Add Test Log</button>
+    </div>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Funpkg.com%2Fleaflet%2Fdist%2Fleaflet.js&data=05%7C02%7C%7Cd19c3e73a1394555124f08ddb7b4b57b%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868708953394392%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=up697qjbfD%2Fk4j25aScPUnaS3lEK%2BOAJSlo0%2B0q0g54%3D&reserved=0"></script>
+
+  <script>
+    // Initialize the map
+    var map = L.map('map').setView([56.087, 37.545], 8);
+
+    L.tileLayer('[https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png]https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data © OpenStreetMap contributors',
+      maxZoom: 18,
+    }).addTo(map);
+
+    L.marker([56.087, 37.545]).addTo(map)
+      .bindPopup('Approx. UVB-76 Location')
+      .openPopup();
+
+    // Interactive dashboard logic
+    function toggleStatus() {
+      const status = document.getElementById('status');
+      if (status.innerText === 'Active') {
+        status.innerText = 'Inactive';
+        status.style.color = '#f00';
+        addToLog('Status changed to Inactive.');
+      } else {
+        status.innerText = 'Active';
+        status.style.color = '#0f0';
+        addToLog('Status changed to Active.');
+      }
+    }
+
+    function addLog() {
+      addToLog('Test log entry at ' + new Date().toLocaleTimeString());
+    }
+
+    function addToLog(message) {
+      const log = document.getElementById('log');
+      log.innerHTML += message + '<br>';
+      log.scrollTop = log.scrollHeight;
+    }
+  </script>
+</body>
+</html>
