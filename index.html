@@ -3,211 +3,228 @@
 <head>
   <meta charset="UTF-8" />
   <title>J.M UVB-76 Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Funpkg.com%2Fleaflet%2Fdist%2Fleaflet.css&data=05%7C02%7C%7Cf85b8d6b42494272d0b608ddb7b87476%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868725053584056%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=jAYSjeu5e0YETfTkURFZP1r2pRhmihNK1Mx8RzeGF5Q%3D&reserved=0" />
-
+  <link rel="stylesheet" href="https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Funpkg.com%2Fleaflet%2Fdist%2Fleaflet.css&data=05%7C02%7C%7C999aeeb9b1aa4a96d42f08ddb7b976a8%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868729367352353%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=TOEXaq4qml7VW9MYK6%2BUgYC4shRWjrLGvpdwaBcofns%3D&reserved=0" />
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
       background: #000;
       color: #eee;
-      height: 100vh;
+      font-family: monospace;
       display: flex;
       flex-direction: column;
+      height: 100vh;
     }
 
-    #header {
+    header {
       display: flex;
       align-items: center;
       background: #111;
       padding: 10px 20px;
     }
 
-    #header img {
-      width: 120px;
+    header svg {
+      height: 50px;
+      margin-right: 20px;
     }
 
-    #tabs {
+    h1 {
+      font-weight: normal;
+      color: #c97e7e;
+    }
+
+    nav {
       display: flex;
       background: #222;
     }
 
-    #tabs button {
+    nav button {
       flex: 1;
       background: #222;
       color: #eee;
       border: none;
       padding: 12px;
       cursor: pointer;
-      font-weight: bold;
     }
 
-    #tabs button.active {
-      background: #444;
-      color: #0f0;
+    nav button.active {
+      background: #333;
+      color: #c97e7e;
     }
 
-    #content {
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tabcontent {
       flex: 1;
       display: none;
-      height: calc(100vh - 120px);
+      flex-direction: column;
     }
 
-    #content.active {
-      display: block;
+    .tabcontent.active {
+      display: flex;
     }
 
     iframe, #map {
-      width: 100%;
-      height: 100%;
+      flex: 1;
       border: none;
     }
 
-    #anomaly, #log, #tools {
-      padding: 20px;
-      overflow-y: auto;
-      height: calc(100% - 40px);
-    }
-
-    #logOutput {
-      background: #000;
-      border: 1px solid #0f0;
+    .controls {
+      background: #111;
       padding: 10px;
-      font-family: monospace;
-      height: 200px;
-      overflow-y: auto;
     }
 
-    #logControls {
-      margin-top: 10px;
-    }
-
-    #logControls button {
-      background: #0f0;
+    .controls button {
+      background: #c97e7e;
       color: #000;
       border: none;
       padding: 8px 12px;
       margin-right: 5px;
       cursor: pointer;
     }
+
+    #logBox {
+      flex: 1;
+      background: #111;
+      padding: 10px;
+      overflow-y: auto;
+      font-family: monospace;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    a {
+      color: #c97e7e;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
-
 <body>
-  <!-- Header -->
-  <div id="header">
-    <img src="logo.svg" alt="J.M Logo" />
-  </div>
 
-  <!-- Tabs -->
-  <div id="tabs">
-    <button class="tablink active" onclick="openTab('sdrTab')">📡 SDR</button>
-    <button class="tablink" onclick="openTab('mapTab')">🗺️ Map</button>
-    <button class="tablink" onclick="openTab('anomalyTab')">📈 Anomaly Detection</button>
-    <button class="tablink" onclick="openTab('logTab')">📚 Log</button>
-    <button class="tablink" onclick="openTab('toolsTab')">⚙️ Tools</button>
-  </div>
+  <!-- Inline Rose Gold J.M Logo -->
+  <header>
+    <svg viewBox="0 0 200 50" xmlns="https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg&data=05%7C02%7C%7C999aeeb9b1aa4a96d42f08ddb7b976a8%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868729367393313%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=%2FinX7l9nLpY8EKAMPhk4vmd9wOEKFEJHBrAVrHLjSB8%3D&reserved=0">
+      <text x="0" y="40" font-size="40" fill="#c97e7e" font-family="monospace">J.M</text>
+    </svg>
+    <h1>UVB-76 Dashboard</h1>
+  </header>
 
-  <!-- Content -->
-  <div id="sdrTab" class="tabcontent active">
-    <iframe id="sdrFrame" src="https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwebsdr.ewi.utwente.nl%3A8901%2F%3Ftune%3D4625am&data=05%7C02%7C%7Cf85b8d6b42494272d0b608ddb7b87476%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868725053611496%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=M3nuI83MF1H8qSxCJGM3vL8Lmvcw77hmy2ehmCzxC%2B8%3D&reserved=0"></iframe>
-    <div style="padding: 10px; background: #111;">
-      <button onclick="switchSDR('https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwebsdr.ewi.utwente.nl%3A8901%2F%3Ftune%3D4625am&data=05%7C02%7C%7Cf85b8d6b42494272d0b608ddb7b87476%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868725053631559%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=vWUfxCFaBk3W6qPNyfl6wDfrfk2HLnQVnfYDA3FLqzU%3D&reserved=0')">WebSDR (NL)</button>
-      <button onclick="switchSDR('http://kiwisdr:8073/')">KiwiSDR</button>
-      <button onclick="switchSDR('https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fmsk.swl.su%3A8073%2F&data=05%7C02%7C%7Cf85b8d6b42494272d0b608ddb7b87476%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868725053647503%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=YgvI1bI6P3ddI1JWa%2BhJ9jTmG1NY8U2z2WkARx6S4E8%3D&reserved=0')">Moscow SDR</button>
-    </div>
-  </div>
+  <nav>
+    <button class="tab active" onclick="openTab(event, 'sdr')">📡 SDR</button>
+    <button class="tab" onclick="openTab(event, 'map')">🗺️ Map</button>
+    <button class="tab" onclick="openTab(event, 'anomaly')">📈 Anomaly</button>
+    <button class="tab" onclick="openTab(event, 'log')">📚 Log</button>
+    <button class="tab" onclick="openTab(event, 'tools')">⚙️ Tools</button>
+  </nav>
 
-  <div id="mapTab" class="tabcontent">
-    <div id="map"></div>
-  </div>
+  <main>
+    <!-- SDR Tab -->
+    <section id="sdr" class="tabcontent active">
+      <iframe id="sdrFrame" src="https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwebsdr.ewi.utwente.nl%3A8901%2F%3Ftune%3D4625am&data=05%7C02%7C%7C999aeeb9b1aa4a96d42f08ddb7b976a8%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868729367417950%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=m4fKpMSjRGa0PmrpGj8hTK%2B6z6iArXf7iAmJJ%2BU%2BJNM%3D&reserved=0"></iframe>
+      <div class="controls">
+        <button onclick="switchSDR('https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwebsdr.ewi.utwente.nl%3A8901%2F%3Ftune%3D4625am&data=05%7C02%7C%7C999aeeb9b1aa4a96d42f08ddb7b976a8%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868729367437755%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=mkOEGBhbkSDslc8jvf5jzgiRdUzaXXX6f4SFNaf7ePA%3D&reserved=0')">WebSDR (NL)</button>
+        <button onclick="switchSDR('http://kiwisdr:8073/')">KiwiSDR</button>
+        <button onclick="switchSDR('https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fmsk.swl.su%3A8073%2F&data=05%7C02%7C%7C999aeeb9b1aa4a96d42f08ddb7b976a8%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868729367453847%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=zKOYLu2kBxSuIAy%2BUTnyhJcVkq4GBuBxhNFHnZZ6qxw%3D&reserved=0')">Moscow SDR</button>
+      </div>
+    </section>
 
-  <div id="anomalyTab" class="tabcontent">
-    <div id="anomaly">
+    <!-- Map Tab -->
+    <section id="map" class="tabcontent">
+      <div id="map" style="flex: 1;"></div>
+    </section>
+
+    <!-- Anomaly Tab -->
+    <section id="anomaly" class="tabcontent">
       <h2>Anomaly Detection</h2>
-      <p>Status: <span id="anomalyStatus">Normal</span></p>
+      <p>Status: <span id="status">Normal</span></p>
       <p>Last Anomaly: <span id="lastAnomaly">None</span></p>
       <button onclick="simulateAnomaly()">Simulate Anomaly</button>
-    </div>
-  </div>
+    </section>
 
-  <div id="logTab" class="tabcontent">
-    <div id="log">
+    <!-- Log Tab -->
+    <section id="log" class="tabcontent">
       <h2>Event Log</h2>
-      <div id="logOutput"></div>
-      <div id="logControls">
+      <div id="logBox"></div>
+      <div class="controls">
         <button onclick="addLog()">Add Log</button>
         <button onclick="clearLog()">Clear Log</button>
       </div>
-    </div>
-  </div>
+    </section>
 
-  <div id="toolsTab" class="tabcontent">
-    <div id="tools">
-      <h2>Tools</h2>
-      <p><a href="https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.sigidwiki.com%2Fwiki%2FUVB-76&data=05%7C02%7C%7Cf85b8d6b42494272d0b608ddb7b87476%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868725053667992%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=mPQScQ2wnBI%2BaW21xtZkkLt%2BviaHQS0l2waDzpVz6WQ%3D&reserved=0" target="_blank">Signal ID Wiki</a></p>
-      <p><a href="https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.websdr.org%2F&data=05%7C02%7C%7Cf85b8d6b42494272d0b608ddb7b87476%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868725053683833%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=nhuc7xq5DnvMsrvjleEipDUbOn817OO%2BBOg9laQm7Wc%3D&reserved=0" target="_blank">More SDRs</a></p>
-      <p><a href="https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.kiwisdr.com%2Fpublic%2F&data=05%7C02%7C%7Cf85b8d6b42494272d0b608ddb7b87476%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868725053701579%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=LnMAHYT6SmsD%2BOkW9ynh%2BOOLYDDBxhNxDIFCHfdXZlU%3D&reserved=0" target="_blank">Public KiwiSDR Directory</a></p>
-    </div>
-  </div>
+    <!-- Tools Tab -->
+    <section id="tools" class="tabcontent">
+      <h2>Tools & Resources</h2>
+      <ul>
+        <li><a href="https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.sigidwiki.com%2Fwiki%2FUVB-76&data=05%7C02%7C%7C999aeeb9b1aa4a96d42f08ddb7b976a8%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868729367473701%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=KGW%2BY3SNseWITCgWWz87Y3168lLgTmSuCOM70bgvdp0%3D&reserved=0" target="_blank">Signal ID Wiki</a></li>
+        <li><a href="https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.websdr.org%2F&data=05%7C02%7C%7C999aeeb9b1aa4a96d42f08ddb7b976a8%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868729367493970%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=sGTxihMcLd0sT%2BdbQpPCJcLPjRs5MVda8tdK%2Bu%2BKs%2FI%3D&reserved=0" target="_blank">More SDRs</a></li>
+        <li><a href="https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.kiwisdr.com%2Fpublic%2F&data=05%7C02%7C%7C999aeeb9b1aa4a96d42f08ddb7b976a8%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868729367509959%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=9jxRhg8CF2i9OgghtpwzBPpoLfPq9biDKvN662Go2t0%3D&reserved=0" target="_blank">Public KiwiSDR Directory</a></li>
+      </ul>
+    </section>
+  </main>
 
-  <!-- Scripts -->
-  <script src="https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Funpkg.com%2Fleaflet%2Fdist%2Fleaflet.js&data=05%7C02%7C%7Cf85b8d6b42494272d0b608ddb7b87476%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868725053717601%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=cUA1eaRqQivGYxBnC1ZOSh5VnD25QSbLzIC8reXC7B4%3D&reserved=0"></script>
+  <!-- Leaflet JS -->
+  <script src="https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Funpkg.com%2Fleaflet%2Fdist%2Fleaflet.js&data=05%7C02%7C%7C999aeeb9b1aa4a96d42f08ddb7b976a8%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868729367526671%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=utN8YZcnHMeyMt9L0rMjwgpPtw1%2BME6f6aHutgZ3GLU%3D&reserved=0"></script>
   <script>
-    // Tab logic
-    function openTab(tabName) {
-      document.querySelectorAll('.tabcontent').forEach(tab => tab.classList.remove('active'));
-      document.querySelectorAll('.tablink').forEach(btn => btn.classList.remove('active'));
-      document.getElementById(tabName).classList.add('active');
+    // Tabs
+    function openTab(event, tab) {
+      document.querySelectorAll('.tabcontent').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+      document.getElementById(tab).classList.add('active');
       event.target.classList.add('active');
     }
 
-    // Map
-    const map = L.map('map').setView([56.087, 37.545], 8);
-    L.tileLayer('https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Ftile.openstreetmap.org%2F&data=05%7C02%7C%7Cf85b8d6b42494272d0b608ddb7b87476%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868725053736414%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=ca6AS23TEKfyHupAajHhCXuFnV7r9EQxQTdflGGpKl0%3D&reserved=0{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap'
-    }).addTo(map);
-    L.marker([56.087, 37.545]).addTo(map).bindPopup('Approx. UVB-76').openPopup();
-
-    // SDR switching
+    // SDR switcher
     function switchSDR(url) {
       document.getElementById('sdrFrame').src = url;
     }
 
-    // Logs
+    // Map
+    const map = L.map('map').setView([56.087, 37.545], 8);
+    L.tileLayer('https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Ftile.openstreetmap.org%2F&data=05%7C02%7C%7C999aeeb9b1aa4a96d42f08ddb7b976a8%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868729367542997%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=UF3YnP39asnfe%2Fe2Coz4rBM21gyWXs%2F8%2BqeWpt1uBo8%3D&reserved=0{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap'
+    }).addTo(map);
+    L.marker([56.087, 37.545]).addTo(map).bindPopup('Approx. UVB-76').openPopup();
+
+    // Log + Anomaly
     function addLog() {
-      const log = document.getElementById('logOutput');
-      const message = 'Log at ' + new Date().toLocaleTimeString();
-      log.innerHTML += message + '<br>';
-      log.scrollTop = log.scrollHeight;
-      checkAnomaly(message);
+      const box = document.getElementById('logBox');
+      const entry = 'Event at ' + new Date().toLocaleTimeString();
+      box.innerHTML += entry + '<br>';
+      box.scrollTop = box.scrollHeight;
+      checkAnomaly(entry);
     }
 
     function clearLog() {
-      document.getElementById('logOutput').innerHTML = '';
-    }
-
-    // Anomaly detection logic (simple version)
-    function checkAnomaly(message) {
-      if (message.includes('ALERT')) {
-        document.getElementById('anomalyStatus').innerText = '⚠️ Anomaly Detected';
-        document.getElementById('lastAnomaly').innerText = new Date().toLocaleTimeString();
-      }
+      document.getElementById('logBox').innerHTML = '';
     }
 
     function simulateAnomaly() {
-      addLogEntry('ALERT: Strange pattern detected!');
+      const box = document.getElementById('logBox');
+      const entry = 'ALERT: Pattern anomaly ' + new Date().toLocaleTimeString();
+      box.innerHTML += entry + '<br>';
+      box.scrollTop = box.scrollHeight;
+      checkAnomaly(entry);
     }
 
-    function addLogEntry(message) {
-      const log = document.getElementById('logOutput');
-      log.innerHTML += message + '<br>';
-      log.scrollTop = log.scrollHeight;
-      checkAnomaly(message);
+    function checkAnomaly(entry) {
+      if (entry.includes('ALERT')) {
+        document.getElementById('status').innerText = '⚠️ Anomaly Detected';
+        document.getElementById('lastAnomaly').innerText = new Date().toLocaleTimeString();
+      }
     }
   </script>
+
 </body>
 </html>
