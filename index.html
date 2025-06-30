@@ -91,3 +91,101 @@
   </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>UVB-76 Advanced Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Funpkg.com%2Fleaflet%2Fdist%2Fleaflet.css&data=05%7C02%7C%7C82acb383e4794c0a4cd508ddb7b30394%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868701663805296%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=IpQHx%2Bkz50wOCB5J%2Br2VzXaTIV9N%2Bv6%2BAOnny950l9U%3D&reserved=0" />
+
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #eee;
+    }
+
+    #map {
+      flex: 2;
+      height: 100%;
+    }
+
+    #main {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    #sdr {
+      flex: 2;
+      border: none;
+      width: 100%;
+    }
+
+    #dashboard {
+      flex: 1;
+      background: #222;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #0f0;
+    }
+
+    a {
+      color: #0ff;
+    }
+  </style>
+</head>
+<body>
+  <!-- Map -->
+  <div id="map"></div>
+
+  <!-- SDR & Dashboard -->
+  <div id="main">
+    <!-- WebSDR iframe -->
+    <iframe
+      id="sdr"
+      src="https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwebsdr.ewi.utwente.nl%3A8901%2F%3Ftune%3D4625am&data=05%7C02%7C%7C82acb383e4794c0a4cd508ddb7b30394%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868701663826655%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=mf2rPLxzYJ0LM%2Bu0YznC8p0CU6wILXS%2BlMDagJPfknU%3D&reserved=0"
+    ></iframe>
+
+    <!-- Dashboard -->
+    <div id="dashboard">
+      <h2>UVB-76 Dashboard</h2>
+      <p><strong>Status:</strong> Active</p>
+      <p><strong>Frequency:</strong> 4625 kHz AM</p>
+      <p><strong>Location:</strong> Near Povarovo, Russia (~56.087°N, 37.545°E)</p>
+      <p><strong>Notes:</strong> UVB-76 (aka "The Buzzer") is a mysterious Russian shortwave station transmitting since the late 1970s.</p>
+      <p><strong>Live Stream:</strong> <a href="https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwebsdr.ewi.utwente.nl%3A8901%2F%3Ftune%3D4625am&data=05%7C02%7C%7C82acb383e4794c0a4cd508ddb7b30394%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868701663840820%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=rvKRZssYX%2Bfpn0FitG7gaQs%2BncttukMjkRBylByHorE%3D&reserved=0" target="_blank">Open SDR</a></p>
+      <h3>Anomaly Log (Coming Soon)</h3>
+      <p>Future versions will include AI-based audio anomaly detection. For now, you can manually log observations here.</p>
+    </div>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Funpkg.com%2Fleaflet%2Fdist%2Fleaflet.js&data=05%7C02%7C%7C82acb383e4794c0a4cd508ddb7b30394%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638868701663853757%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=eeXw3ZwizJiTkg7Q4OjKK476Wmq9%2B9j8S1zP8gn5IzM%3D&reserved=0"></script>
+
+  <script>
+    // Initialize map
+    var map = L.map('map').setView([56.087, 37.545], 8);
+
+    L.tileLayer('[https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png]https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data © OpenStreetMap contributors',
+      maxZoom: 18,
+    }).addTo(map);
+
+    L.marker([56.087, 37.545]).addTo(map)
+      .bindPopup('Approx. UVB-76 Location: Povarovo, Russia')
+      .openPopup();
+  </script>
+</body>
+</html>
